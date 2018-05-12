@@ -1,0 +1,38 @@
+<div>
+	<button type="button" (click)="showGames()">Get Games</button>
+  	<div *ngIf="showGame">
+  		<div style="padding-left: 125px;">
+	  		<label>Search</label>
+		  	<input type="text" [(ngModel)]="name">
+	  	</div>
+	  	<table>
+	  		<thead>
+	  			<tr>
+	  				<th (click)="sort('title')">title
+	  					<span class="glyphicon sort-icon" *ngIf="key =='title'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+	  				</th>
+	  				<th>platform</th>
+	  				<th (click)="sort('score')">score
+	  					<span class="glyphicon sort-icon" *ngIf="key =='score'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+	  				</th>
+	  				<th>genre</th>
+	  				<th>editors_choice</th>
+	  				<th>release_year</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  			<tr *ngFor="let link of showGame |filter:name | orderBy: key : reverse | paginate: { itemsPerPage: 15, currentPage: p }; let i = index">
+	  				<td>{{link.title}}</td>
+	  				<td>{{link.platform}}</td>
+	  				<td>{{link.score}}</td>
+	  				<td>{{link.genre}}</td>
+	  				<td>{{link.editors_choice}}</td>
+	  				<td>{{link.release_year}}</td>
+
+	  			</tr>
+	  		</tbody>
+	  	</table>
+
+	  	<pagination-controls  (pageChange)="p = $event"></pagination-controls>
+  	</div>
+</div>
